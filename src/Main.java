@@ -29,11 +29,35 @@ public class Main {
 
             switch (opcion) {
                 case 1:
+                    System.out.println("Ingrese el tamaño del arreglo:");
+                    x = sc.nextInt();
 
+                    int[] A = new int[x];
+
+                    for (int i = 0; i < x; i++){
+                        System.out.println("Inserte el valor " + (i + 1) + ":");
+                        A[i] = sc.nextInt();
+                    }
+
+                    System.out.println("El resultado es: " + menorArreglo(A));
                     break;
 
                 case 2:
+                    System.out.println("Ingrese el tamaño del arreglo:");
+                    x = sc.nextInt();
 
+                    int[] B = new int[x];
+
+                    for (int i = 0; i < x; i++){
+                        System.out.println("Inserte el valor " + (i + 1) + ":");
+                        B[i] = sc.nextInt();
+                    }
+
+                    System.out.println("El resultado es:");
+
+                    for (int i = 0; i < x; i++) {
+                        System.out.println(bubbleSort(B)[i]);
+                    }
                     break;
 
                 case 3:
@@ -96,6 +120,32 @@ public class Main {
 
         } while (opcion != 11);
 
+    }
+
+    private static int menorArreglo(int[] A) {
+        int min = A[0];
+
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] < min){
+                min = A[i];
+            }
+        }
+        return min;
+    }
+
+    private static int [] bubbleSort(int[] B) {
+        int aux;
+
+        for (int i = 0; i < B.length - 1; i++) {
+            for (int j = 0; j < B.length - i - 1; j++) {
+                if (B[j] > B[j+1]) {
+                    aux = B[j];
+                    B[j] = B[j+1];
+                    B[j+1] = aux;
+                }
+            }
+        }
+        return B;
     }
 
     private static int sumaEntIt(int n) {
