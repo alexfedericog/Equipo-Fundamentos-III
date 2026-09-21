@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -21,7 +22,7 @@ public class Main {
             System.out.println("7. Fibonacci - Recursivo (Con programación dinámica)");
             System.out.println("8. Factorial - Iterativo");
             System.out.println("9. Factorial - Recursivo");
-            System.out.println("10. Backtracking");
+            System.out.println("10. Suma de subconjuntos (Backtracking)");
             System.out.println("11. Salir");
             System.out.println("-------------------------------------");
 
@@ -92,7 +93,14 @@ public class Main {
                     System.out.println();
                     break;
                 case 7:
+                    System.out.println("Ingrese n:");
+                    x = sc.nextInt();
 
+                    long [] fib = new long [x + 1];
+                    Arrays.fill(fib,-1);
+
+                    System.out.println("El resultado es: " + fiboRePD(x,fib));
+                    System.out.println();
                     break;
 
                 case 8:
@@ -111,10 +119,29 @@ public class Main {
                     break;
 
                 case 10:
+                    System.out.println("Ingrese el tamaño del arreglo:");
+                    x = sc.nextInt();
+
+                    int[] T = new int[x];
+
+                    for(int i = 0; i < x; ++i) {
+                        System.out.println("Inserte el valor " + (i + 1) + ":");
+                        T[i] = sc.nextInt();
+                    }
+
+                    System.out.println("Ingresa el resultado que buscas:");
+                    int k = sc.nextInt();
+
+                    sumaConjuntos(T,0,0,k,"");
+                    //conjutno solo las "" para que este vacio
                     break;
 
                 case 11:
                     System.out.println("Saliendo del sistema...");
+                    break;
+
+                default:
+                    System.out.println("Inserte un número del 1 al 11");
                     break;
             }
 
@@ -181,9 +208,24 @@ public class Main {
 
     private static int fiboRe(int n) {
         if (n == 0 || n == 1) {
-            return 1;
+            return n;
         } else {
-            return fiboRe(n) + fiboRe(n-1);
+            return fiboRe(n-1) + fiboRe(n-2);
+        }
+    }
+
+    private static long fiboRePD(int n, long fib[]) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        else {
+            if (fib[n] != -1) {
+                return fib[n];
+            }
+            else {
+                fib[n] = fiboRePD(n - 1, fib) + fiboRePD(n-2, fib);
+            }
+            return fib[n];
         }
     }
 
@@ -205,5 +247,28 @@ public class Main {
         } else {
             return n * factoRe(n-1);
         }
+    }
+
+    private static void sumaConjuntos(int[] T, int p, int suma, int k, String conjunto) {
+        if (suma == k) {
+            System.out.println("Subconjunto: " + conjunto);
+            return;
+        }
+
+        if (p == T.length) {
+            return;
+        }
+
+        // Tomar el elemento
+        sumaConjuntos(T, p + 1,
+                suma + T[p],
+                k,
+                conjunto + T[p] + " ");
+
+        // No tomar el elemento
+        sumaConjuntos(T, p + 1,
+                suma,
+                k,
+                conjunto);
     }
 }
